@@ -1,0 +1,13 @@
+
+bash開啟終端用source venv/Scripts/activate
+
+關閉終端用 deactivate
+
+虛擬環境venv類似一種隔離層 獨立出一個套件空間
+ex: 專案a要用flask1.0 而b需要flask2.0 如果照常裝在全域python則裝一個全部都會被改動
+    用venv隔開的話就不會有版本衝突的問題
+
+需要的套件: pip install flask flask_sqlalchemy flask_cors
+可以用 pip freeze > requirements.txt 把用到的套件弄成需求清單的txt檔 別人就可以一鍵安裝需要的套件
+
+
