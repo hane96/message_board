@@ -11,3 +11,4 @@ ex: 專案a要用flask1.0 而b需要flask2.0 如果照常裝在全域python則�
 可以用 pip freeze > requirements.txt 把用到的套件弄成需求清單的txt檔 別人就可以一鍵安裝需要的套件
 
 
+a
