@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>留言板</title>
+</head>
+<body>
+    <h1>留言板</h1>
+
+    <div>
+        <h2>新增留言</h2>
+        <input type="text" id="messageInput" placeholder="輸入留言內容">
+        <button onclick="postMessage()">送出留言</button> 
+    </div>
+
+    <div>
+        <h2>所有留言</h2>
+        <button onclick="loadMessages()">重新載入留言</button>
+        <ul id="messageList"></ul>
+    </div>
+
+    <script>
+        // 取得所有留言
+        async function loadMessages() {
+            const res = await fetch('/messages'); //用GET叫api拿留言
+            const messages = await res.json(); //轉成JSON
+
+            const list = document.getElementById('messageList'); //要更新的東西的id: messageList
+            list.innerHTML = ''; //清空留言
+            messages.forEach(msg => { //一條一條加msg進去
+                const li = document.createElement('li');
+                li.textContent = `[${msg.created_at}] ${msg.content}`;
+                list.appendChild(li);
+            });
+        }
+
+        // 新增留言
+        async function postMessage() {
+            const content = document.getElementById('messageInput').value;
+            if (!content) return alert("留言不能是空的！");
+            
+            await fetch('/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }, //表示傳的資料格式為JSON
+                body: JSON.stringify({ content }) //把JS物件轉JSON字串
+            });
+
+            document.getElementById('messageInput').value = ''; //清空
+            loadMessages(); // 重新載入
+        }
+
+        // 預設載入留言
+        loadMessages();
+    </script>
+</body>
+</html>
